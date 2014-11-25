@@ -1,0 +1,96 @@
+(lp0
+S'Fine Dining'
+p1
+aS'Theatre & Performing Arts'
+p2
+aS'Golf'
+p3
+aS'Galleries & Exhibitions'
+p4
+aS'Good Wine'
+p5
+aS'Sailing & Boating'
+p6
+aS'Antiques & Collectable'
+p7
+aS'Charity Work'
+p8
+aS'Cards & Board Games'
+p9
+aS'Fashion & Design'
+p10
+aS'Bistros & International Cuisine'
+p11
+aS'Cocktails'
+p12
+aS'Arthouse & Independent Films'
+p13
+aS'Day Spas'
+p14
+aS'Gourmet Food & Cooking'
+p15
+aS'Tennis'
+p16
+aS'Travel & Sightseeing'
+p17
+aS'Skiing'
+p18
+aS'Blockbusters'
+p19
+aS'Pubs & Bars'
+p20
+aS'Outdoor Recreation'
+p21
+aS'Watching Sport'
+p22
+aS'Kids & Family Activities'
+p23
+aS'Casual Dining'
+p24
+aS'Fitness & Exercise'
+p25
+aS'Walking the dog'
+p26
+aS'Bowling, Lasertag & Paintball'
+p27
+aS'Surf, Skate & Snowboard'
+p28
+aS'Live Shows & Comedy'
+p29
+aS'Photography'
+p30
+aS'Organic & Health Foods'
+p31
+aS'Live Music'
+p32
+aS'Cafes & Coffeeshops'
+p33
+aS'Vintage, Crafts & DIY'
+p34
+aS'Design &Technology'
+p35
+aS'Yoga & Pilates'
+p36
+aS'Clubbing & After Hours'
+p37
+aS'Festivals'
+p38
+aS'Tattoos & Piercings'
+p39
+aS'Extreme Sports'
+p40
+aS'Pool Halls & Dive Bars'
+p41
+aS'Fast Cars & Customization'
+p42
+aS'Poker & Gambling'
+p43
+aS'New Age & Psychedelia'
+p44
+aS'Adult'
+p45
+aS'is_male'
+p46
+aS'is_female'
+p47
+a.
