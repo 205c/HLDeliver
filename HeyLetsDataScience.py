@@ -162,6 +162,14 @@ class heylets_datascience(object):
         
         return corpus
 
+    def to_V_matr_dump(self):
+        mat = self.interest_model.lsi.projection.u[:,:25].Training
+        list_of_tuples = []
+        for row in mat.shape[0]:
+            tup = ([row] + list(mat[row]))
+            list_of_tuples.append(tup)
+        return list_of_tuples
+
 
 if __name__ == '__main__':
     secret = pkl.load(open('secret.pkl','r')) # credentials
