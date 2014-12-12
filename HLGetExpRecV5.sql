@@ -28,8 +28,7 @@ declare nLikeMax int default 0;
 
 if not exists(select * from InterestVector where IV_MB_Id = nMBId) then
 call HLGetExpRecV4(nMBId, nMemberInts, nMemberAge, szMemberRelStatus, nMemberGender, nTOD, nMbLat, nMbLon, nStyleId, nCatId, szSearch, nlatMin, nlatMax, nlonMin, nlonMax, nOffset, nLimit);
-return;
-end if;
+End If;
 
 if nOffset = 0 then
 # crunch ExpLastSeen recs.

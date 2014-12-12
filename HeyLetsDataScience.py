@@ -163,7 +163,13 @@ class heylets_datascience(object):
         return corpus
 
     def to_V_matr_dump(self):
-        mat = self.interest_model.lsi.projection.u[:,:25].Training
+        # find the permutation of the matrix
+        permute = []
+        for i in range(47): # these are the interests
+            permute.append(self.interest_model.lsi.id2word.token2id[str(i)])
+        
+        mat = self.interest_model.lsi.projection.u[:,:25].T
+        mat = mat[:,permute] # permutes correctly
         list_of_tuples = []
         for row in mat.shape[0]:
             tup = ([row] + list(mat[row]))
