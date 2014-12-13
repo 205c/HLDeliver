@@ -7,6 +7,7 @@ ds = heylets_datascience(**secret)
 print "Training..."
 ds.train()
 print "Dumping..."
-# ds.dump_sql()
-# VTable.createTable()
-# VTable.loadTable(ds.to_V_matr_dump())
+ds.dump_sql()
+vt = VTable(**secret)
+vt.createTable(25, 47)
+vt.loadTable(ds.to_V_matr_dump())

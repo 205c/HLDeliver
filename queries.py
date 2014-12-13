@@ -259,7 +259,7 @@ class CreateInterests(object):
         self.cur.execute("DROP TABLE IF EXISTS InterestVector") #check
         create_query = "CREATE TABLE InterestVector (IV_MB_Id Int(11) NOT NULL"
         for i in range(vector_size):
-            create_query += ", I" + str(i) + " DECIMAL(10,2) NOT NULL"
+            create_query += ", I" + str(i) + " DECIMAL(10,4) NOT NULL"
         create_query += ", PRIMARY KEY (IV_MB_ID), FOREIGN KEY (IV_MB_ID) references Members(MB_Id)) ENGINE=INNODB"
 
         self.cur.execute(create_query)

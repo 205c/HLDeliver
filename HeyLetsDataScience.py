@@ -171,8 +171,8 @@ class heylets_datascience(object):
         mat = self.interest_model.lsi.projection.u[:,:25].T
         mat = mat[:,permute] # permutes correctly
         list_of_tuples = []
-        for row in mat.shape[0]:
-            tup = ([row] + list(mat[row]))
+        for row in range(mat.shape[0]):
+            tup = tuple([row] + list(mat[row]))
             list_of_tuples.append(tup)
         return list_of_tuples
 

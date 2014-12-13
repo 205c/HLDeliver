@@ -2,10 +2,10 @@ DELIMITER $$
 
 DROP FUNCTION IF EXISTS HLGetVecSimilarity;
 
-CREATE FUNCTION HLGetVecSimilarity(A_Id int(11), B_Id int(11)) RETURNS DECIMAL(10, 2)
+CREATE FUNCTION HLGetVecSimilarity(A_Id int(11), B_Id int(11)) RETURNS DECIMAL(10,4)
 BEGIN
 
-DECLARE dotProduct DECIMAL(10,2); 
+DECLARE dotProduct DECIMAL(10,4); 
 
 select  (
         Vec0.I0 * Vec1.I0 + 

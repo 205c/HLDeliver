@@ -108,7 +108,7 @@ from
              + 
             HLGetRecencyFactorV4(EX_SpecificTime)
             as ML_Relavency,
-            (IV1.I0 * IV1.I0 + IV0.I1 * IV1.I1 + IV0.I2 * IV1.I2 + IV0.I3 * IV1.I3 + IV0.I4 * IV1.I4 + 
+            (IV0.I0 * IV1.I0 + IV0.I1 * IV1.I1 + IV0.I2 * IV1.I2 + IV0.I3 * IV1.I3 + IV0.I4 * IV1.I4 + 
             IV0.I5 * IV1.I5 + IV0.I6 * IV1.I6 + IV0.I7 * IV1.I7 + IV0.I8 * IV1.I8 + IV0.I9 * IV1.I9 +
             IV0.I10 * IV1.I10 + IV0.I11 * IV1.I11 + IV0.I12 * IV1.I12 + IV0.I13 * IV1.I13 + IV0.I14 * IV1.I14 + 
             IV0.I15 * IV1.I15 + IV0.I16 * IV1.I16 + IV0.I17 * IV1.I17 + IV0.I18 * IV1.I18 + IV0.I19 * IV1.I19 +
@@ -120,6 +120,8 @@ from
         from Experience 
             join Members MC ON EX_MB_Id = MB_Id # the member is the creator
             join Places ON EX_Place_PL_Id = PL_Id
+            JOIN InterestVector as IV0 ON EX_MB_Id = IV0.IV_MB_Id 
+            JOIN InterestVector as IV1 ON nMbId = IV1.IV_MB_Id 
             join Category ON EX_Category = CA_ID
             left join ExperienceLastSeen ON EX_Id = ES_EX_Id and  nMbId = ES_MB_Id
 
@@ -139,7 +141,7 @@ from
             nMemberInts & CA_InterestNumber and
            
             # calc similarity of interest vectors and make sure its above some threshold 
-            (IV1.I0 * IV1.I0 + IV0.I1 * IV1.I1 + IV0.I2 * IV1.I2 + IV0.I3 * IV1.I3 + IV0.I4 * IV1.I4 + 
+            (IV0.I0 * IV1.I0 + IV0.I1 * IV1.I1 + IV0.I2 * IV1.I2 + IV0.I3 * IV1.I3 + IV0.I4 * IV1.I4 + 
             IV0.I5 * IV1.I5 + IV0.I6 * IV1.I6 + IV0.I7 * IV1.I7 + IV0.I8 * IV1.I8 + IV0.I9 * IV1.I9 +
             IV0.I10 * IV1.I10 + IV0.I11 * IV1.I11 + IV0.I12 * IV1.I12 + IV0.I13 * IV1.I13 + IV0.I14 * IV1.I14 + 
             IV0.I15 * IV1.I15 + IV0.I16 * IV1.I16 + IV0.I17 * IV1.I17 + IV0.I18 * IV1.I18 + IV0.I19 * IV1.I19 +
@@ -158,7 +160,7 @@ from
 
     
 order by
-((df + ML_TimeLastSeenFactor) * 0.75) + ML_Relavency desc
+0*(((df + ML_TimeLastSeenFactor) * 0.75) + ML_Relavency) + 1*InterestSimilarity desc
 # can include InterestSimilarity here to help with ordering
 ) as realTimeExps
     
