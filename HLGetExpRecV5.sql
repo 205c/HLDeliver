@@ -113,6 +113,11 @@ from
             IV0.I10 * IV1.I10 + IV0.I11 * IV1.I11 + IV0.I12 * IV1.I12 + IV0.I13 * IV1.I13 + IV0.I14 * IV1.I14 + 
             IV0.I15 * IV1.I15 + IV0.I16 * IV1.I16 + IV0.I17 * IV1.I17 + IV0.I18 * IV1.I18 + IV0.I19 * IV1.I19 +
             IV0.I20 * IV1.I20 + IV0.I21 * IV1.I21 + IV0.I22 * IV1.I22 + IV0.I23 * IV1.I23 + IV0.I24 * IV1.I24) as InterestSimilarity,
+            (IV2.I0 * IV1.I0 + IV2.I1 * IV1.I1 + IV2.I2 * IV1.I2 + IV2.I3 * IV1.I3 + IV2.I4 * IV1.I4 + 
+            IV2.I5 * IV1.I5 + IV2.I6 * IV1.I6 + IV2.I7 * IV1.I7 + IV2.I8 * IV1.I8 + IV2.I9 * IV1.I9 +
+            IV2.I10 * IV1.I10 + IV2.I11 * IV1.I11 + IV2.I12 * IV1.I12 + IV2.I13 * IV1.I13 + IV2.I14 * IV1.I14 + 
+            IV2.I15 * IV1.I15 + IV2.I16 * IV1.I16 + IV2.I17 * IV1.I17 + IV2.I18 * IV1.I18 + IV2.I19 * IV1.I19 +
+            IV2.I20 * IV1.I20 + IV2.I21 * IV1.I21 + IV2.I22 * IV1.I22 + IV2.I23 * IV1.I23 + IV2.I24 * IV1.I24) as InterestExpSimilarity
             HLGetLastSeenFactor(ES_LastSeen) as ML_TimeLastSeenFactor
             
             
@@ -122,6 +127,7 @@ from
             join Places ON EX_Place_PL_Id = PL_Id
             JOIN InterestVector as IV0 ON EX_MB_Id = IV0.IV_MB_Id 
             JOIN InterestVector as IV1 ON nMbId = IV1.IV_MB_Id 
+            JOIN ExpInterestVector as IV2 on EX_Id = IV2.IV_EX_ID
             join Category ON EX_Category = CA_ID
             left join ExperienceLastSeen ON EX_Id = ES_EX_Id and  nMbId = ES_MB_Id
 
@@ -160,7 +166,7 @@ from
 
     
 order by
-0*(((df + ML_TimeLastSeenFactor) * 0.75) + ML_Relavency) + 1*InterestSimilarity desc
+0*(((df + ML_TimeLastSeenFactor) * 0.75) + ML_Relavency) + .5*InterestSimilarity + .5*InterestExpSimilarity desc
 # can include InterestSimilarity here to help with ordering
 ) as realTimeExps
     

@@ -79,6 +79,18 @@ class heylets_datascience(object):
         print "total dumped: %s" % total_dumped
 
 
+        # dump experiences into SQL
+        exp_dict = {}
+        for exp in self.all_experiences:
+            smoothed_vec = self.interest_model.smooth(exp.EX_Interests)
+            if np.isnan(smoothed_vec[0]):
+                continue
+            else:
+                exp_dict[exp.EX_ID] = smoothed_vec
+        self.interest_loader.load_experiences(exp_dict)
+
+
+
     def train(self):
         '''
         trains both the models and prepares the datascience model for queries
@@ -110,7 +122,7 @@ class heylets_datascience(object):
         self.trained = True
 
     def get_experience_corpus(self):
-        all_experiences = self.eq.get_experiences()
+        self.all_experiences = self.eq.get_experiences()
         all_strings_trunc = [x.EX_Description for x in all_experiences if len(x.EX_Description.split()) > 5]
         return all_strings_trunc
 

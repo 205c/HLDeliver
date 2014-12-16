@@ -240,6 +240,24 @@ class InterestLoader(object):
            # Rollback in case there is any error
            self.db.rollback()
 
+    def load_experiences(self, experience_dict):
+        insert_string = "INSERT INTO ExpInterestVector VALUES"
+        
+        for MB_Id in interest_dict:
+            insert_string += " (" + str(MB_Id)
+            for entry in interest_dict[MB_Id]:
+                insert_string += ", " + str(entry)
+            insert_string += ")," 
+        #qprint insert_string[:-1]
+        try:
+           # Execute the SQL command
+           self.cur.execute(insert_string[:-1])
+           # Commit your changes in the database
+           self.db.commit()
+        except:
+           # Rollback in case there is any error
+           self.db.rollback()
+
 
 
 import MySQLdb
@@ -254,6 +272,15 @@ class CreateInterests(object):
 
         self.cur = self.db.cursor() 
     
+
+    def createInterestsTable(self, vector_size):
+        self.cur.execute("DROP TABLE IF EXISTS ExpInterestVector") #check
+        create_query = "CREATE TABLE ExpInterestVector (IV_EX_Id Int(11) NOT NULL"
+        for i in range(vector_size):
+            create_query += ", I" + str(i) + " DECIMAL(10,4) NOT NULL"
+        create_query += ", PRIMARY KEY (IV_EX_ID), FOREIGN KEY (IV_EX_ID) references Experiences(EX_Id)) ENGINE=INNODB"
+
+        self.cur.execute(create_query)
 
     def createTable(self, vector_size):
         self.cur.execute("DROP TABLE IF EXISTS InterestVector") #check
