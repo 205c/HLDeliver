@@ -243,9 +243,9 @@ class InterestLoader(object):
     def load_experiences(self, experience_dict):
         insert_string = "INSERT INTO ExpInterestVector VALUES"
         
-        for MB_Id in interest_dict:
+        for MB_Id in experience_dict:
             insert_string += " (" + str(MB_Id)
-            for entry in interest_dict[MB_Id]:
+            for entry in experience_dict[MB_Id]:
                 insert_string += ", " + str(entry)
             insert_string += ")," 
         #qprint insert_string[:-1]
@@ -254,8 +254,9 @@ class InterestLoader(object):
            self.cur.execute(insert_string[:-1])
            # Commit your changes in the database
            self.db.commit()
-        except:
+        except Exception as e:
            # Rollback in case there is any error
+           print e
            self.db.rollback()
 
 
@@ -278,7 +279,7 @@ class CreateInterests(object):
         create_query = "CREATE TABLE ExpInterestVector (IV_EX_Id Int(11) NOT NULL"
         for i in range(vector_size):
             create_query += ", I" + str(i) + " DECIMAL(10,4) NOT NULL"
-        create_query += ", PRIMARY KEY (IV_EX_ID), FOREIGN KEY (IV_EX_ID) references Experiences(EX_Id)) ENGINE=INNODB"
+        create_query += ", PRIMARY KEY (IV_EX_ID), FOREIGN KEY (IV_EX_ID) references Experience(EX_Id)) ENGINE=INNODB"
 
         self.cur.execute(create_query)
 

@@ -2,6 +2,7 @@ from queries import *
 from interests import interest_smoother
 from hlnlp import HeyLetsLDA_205
 import pickle as pkl
+import ast
 import numpy as np
 
 class heylets_datascience(object):
@@ -28,7 +29,8 @@ class heylets_datascience(object):
 
         # create the queries that will dump into the SQL tablea
         self.interest_creator = CreateInterests(host, user, pwd, db)
-        self.interest_loader = InterestLoader(host, user, pwd, db) 
+        self.interest_loader = InterestLoader(host, user, pwd, db)
+        self.interest_loader_2 = InterestLoader(host,user,pwd,db)
 
         self.trained = False
 
@@ -41,6 +43,7 @@ class heylets_datascience(object):
             raise Exception("You haven't yet trained the model. You must call .train() before .dump_sql().")
         # create the SQL table
         self.interest_creator.createTable(25)
+        self.interest_creator.createInterestsTable(25)
 
         # we can only dump 1000 at a time, so let's chunk our data
         chunks = [self.female_users[x:x+999] for x in xrange(0, len(self.female_users), 999)]
@@ -81,13 +84,39 @@ class heylets_datascience(object):
 
         # dump experiences into SQL
         exp_dict = {}
-        for exp in self.all_experiences:
-            smoothed_vec = self.interest_model.smooth(exp.EX_Interests)
-            if np.isnan(smoothed_vec[0]):
-                continue
-            else:
-                exp_dict[exp.EX_ID] = smoothed_vec
-        self.interest_loader.load_experiences(exp_dict)
+        chunks = [self.all_experiences[x:x+999] for x in xrange(0, len(self.all_experiences),999)]
+
+        count_no_exp = 0
+        numdumped = 0
+        for chunk in chunks:
+            curr_chunk_dict = {}
+            for exp in chunk:
+                try:
+                    smoothed_vec = self.interest_model.smooth(ast.literal_eval(exp.EX_Interests))
+                except:
+                    count_no_exp += 1
+                    continue
+                if np.isnan(smoothed_vec[0]):
+                    continue # no interests;ignore
+                else:
+                    curr_chunk_dict[exp.EX_Id] = smoothed_vec
+            self.interest_loader.load_experiences(curr_chunk_dict)
+            numdumped += len(curr_chunk_dict)
+        print "num experiences with no interests: %s" % count_no_exp
+        print "num dumped: %s" % numdumped
+
+        # for exp in self.all_experiences:
+        #     try: #try except loop to check malformed exp.EX_Interests
+        #         smoothed_vec = self.interest_model.smooth(ast.literal_eval(exp.EX_Interests))
+        #     except:
+        #         count_no_exp += 1
+        #         continue
+        #     if np.isnan(smoothed_vec[0]):
+        #         continue
+        #     else:
+        #         exp_dict[exp.EX_Id] = smoothed_vec
+        # print "here"
+        # self.interest_loader_2.load_experiences(exp_dict)
 
 
 
@@ -123,7 +152,7 @@ class heylets_datascience(object):
 
     def get_experience_corpus(self):
         self.all_experiences = self.eq.get_experiences()
-        all_strings_trunc = [x.EX_Description for x in all_experiences if len(x.EX_Description.split()) > 5]
+        all_strings_trunc = [x.EX_Description for x in self.all_experiences if len(x.EX_Description.split()) > 5]
         return all_strings_trunc
 
     def interest_vec_to_query(self, vec):
