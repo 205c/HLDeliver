@@ -174,7 +174,7 @@ from
 
     
 order by
-0*(((df + ML_TimeLastSeenFactor) * 0.75) + ML_Relavency) + 0*InterestSimilarity + 1*InterestExpSimilarity desc
+0*(((df + ML_TimeLastSeenFactor) * 0.75) + ML_Relavency) + .5*InterestSimilarity + .8*InterestExpSimilarity desc
 # can include InterestSimilarity here to help with ordering
 ) as realTimeExps
     
